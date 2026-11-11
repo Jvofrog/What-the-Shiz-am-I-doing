@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Room-fit checker</title>
+</head>
+<body>
+  <main>
+    <h1>Room-fit checker</h1>
+    <p>Room capacity: 10 people.</p>
+    <form id="fit-form">
+      <label for="group-size">Group size</label>
+      <input id="group-size" name="group-size" type="text" inputmode="numeric">
+      <button type="submit">Check fit</button>
+    </form>
+    <p id="result" role="status"></p>
+  </main>
+  <script>
+    const form = document.getElementById('fit-form');
+    const groupSize = document.getElementById('group-size');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const value = groupSize.value.trim();
+      const size = Number(value);
+
+      if (!/^[0-9]+$/.test(value) || size === 0) {
+        result.textContent = 'Enter a valid whole number greater than zero.';
+      } else if (size <= 10) {
+        result.textContent = 'This group fits!';
+      } else {
+        result.textContent = 'This group needs a larger room.';
+      }
+    });
+  </script>
+</body>
+</html>
