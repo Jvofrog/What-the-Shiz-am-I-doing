@@ -8,8 +8,16 @@
 <body>
   <main>
     <h1>Room-fit checker</h1>
-    <p>Room capacity: 10 people.</p>
+    <p id="capacity">Room capacity: 16 people.</p>
     <form id="fit-form">
+      <label for="room">Room</label>
+      <select id="room" name="room">
+        <option value="16">Flex 1</option>
+        <option value="20">Flex 2</option>
+        <option value="10">Creativity</option>
+        <option value="10">Collaboration</option>
+        <option value="36">Entire Space</option>
+      </select>
       <label for="group-size">Group size</label>
       <input id="group-size" name="group-size" type="text" inputmode="numeric">
       <button type="submit">Check fit</button>
@@ -18,8 +26,15 @@
   </main>
   <script>
     const form = document.getElementById('fit-form');
+    const room = document.getElementById('room');
+    const capacity = document.getElementById('capacity');
     const groupSize = document.getElementById('group-size');
     const result = document.getElementById('result');
+
+    room.addEventListener('change', () => {
+      capacity.textContent = `Room capacity: ${room.value} people.`;
+      result.textContent = '';
+    });
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -28,7 +43,7 @@
 
       if (!/^[0-9]+$/.test(value) || size === 0) {
         result.textContent = 'Enter a valid whole number greater than zero.';
-      } else if (size <= 10) {
+      } else if (size <= Number(room.value)) {
         result.textContent = 'This group fits!';
       } else {
         result.textContent = 'This group needs a larger room.';
